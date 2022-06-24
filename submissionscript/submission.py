@@ -10,7 +10,7 @@ def try_int(s):
         return s
 
 def alphanum_key(s):
-# split on non-alphanumeric characters
+# split on non-numeric characters
     return [ try_int(c) for c in re.split('([0-9]+)', s) ]
 
 def sort_nicely(l):
@@ -87,8 +87,8 @@ def ignore_older_versions(files, current_version):
 def update_version(username, host, database, password, version):
     execute_sql(f'UPDATE versionTable SET version = {version}', username, host, database, password)
 
-# order scripts, then execute them
 def execute_scripts(directory, username, host, database, password):
+    # order scripts, then execute them
     files = order_scripts(directory)
     files = ignore_older_versions(files, current_version(username, host, database, password))
 
