@@ -20,19 +20,16 @@ def sort_nicely(l):
 
 def remove_non_numbers(l):
 # remove strings from a list that don't begin with a number
-    print(f"Removing non-numbers: {l}")
     l[:] = [x for x in l if x[0].isdigit()]
-    print(f"Remaining: {l}")
 
     return l
 
 def remove_non_sql_files(l):
-    print(f"Removing non-sql files: {l}")
     l[:] = [x for x in l if x.endswith('.sql')]
-    print(f"Remaining: {l}")
     return l
 
 def read_script(filename, directory):
+    # read scripts from file
     filename = os.path.join(directory, filename)
     try:
         with open(filename, 'r') as f:
