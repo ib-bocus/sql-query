@@ -106,9 +106,8 @@ def execute_scripts(directory, username, host, database, password):
     parameters = define_parameters()
 
     files = order_scripts(directory)
-    # files = ignore_older_versions(files, current_version(username, host, database, password))
-    files = ignore_older_versions(files, 5)
-
+    files = ignore_older_versions(files, current_version(username, host, database, password))
+    
     print(f"Executing scripts: {files}")
     for file in files:
         sql = read_script(file, directory)
@@ -116,6 +115,7 @@ def execute_scripts(directory, username, host, database, password):
         latest_version = alphanum_key(file)[1]
         print(f"latest version: {latest_version}")
         update_version(parameters['username'], parameters['host'], parameters['database'], parameters['password'], latest_version)
+
 def main():
     parameters = define_parameters()
     execute_scripts(parameters['directory'], parameters['username'], parameters['host'], parameters['database'], parameters['password'])
