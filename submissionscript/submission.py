@@ -3,30 +3,33 @@ import sys
 import os
 import mysql.connector
 
-def tryint(s):
+def try_int(s):
     try:
         return int(s)
     except:
         return s
 
 def alphanum_key(s):
-
-    return [ tryint(c) for c in re.split('([0-9]+)', s) ]
+# split on non-alphanumeric characters
+    return [ try_int(c) for c in re.split('([0-9]+)', s) ]
 
 def sort_nicely(l):
+# Sort the given list in the way that humans expect.
     l.sort(key=alphanum_key)
     return l
 
-# remove strings from a list that don't begin with a number
 def remove_non_numbers(l):
-    for x in l:
-        if not x[0].isdigit():
-            l.remove(x)
+# remove strings from a list that don't begin with a number
+    print(f"Removing non-numbers: {l}")
+    l[:] = [x for x in l if x[0].isdigit()]
+    print(f"Remaining: {l}")
+
     return l
 
 def remove_non_sql_files(l):
-    for x in l:
-        l[:] = [x for x in l if x.endswith('.sql')]
+    print(f"Removing non-sql files: {l}")
+    l[:] = [x for x in l if x.endswith('.sql')]
+    print(f"Remaining: {l}")
     return l
 
 def read_script(filename, directory):
@@ -104,6 +107,5 @@ def main():
     parameters = define_parameters()
     execute_scripts(parameters['directory'], parameters['username'], parameters['host'], parameters['database'], parameters['password'])
 
-
-
-main()
+if __name__ == '__main__':
+    main()
