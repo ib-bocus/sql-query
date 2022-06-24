@@ -1,0 +1,1 @@
+INSERT INTO someTable VALUES(1);

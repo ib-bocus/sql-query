@@ -1,0 +1,31 @@
+---
+version: '3.8'
+
+services:
+  mysql_db_container:
+    container_name: mysql_container
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: devopstt
+
+  exec_ubuntu_container:
+    container_name: exec_container
+    build:
+      context: .
+      dockerfile: Dockerfile.exec
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: devopstt
+    restart: on-failure
+    volumes:
+      - ./submissionscript/:/submissionscript/
+    depends_on:
+      - mysql_db_container
